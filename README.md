@@ -23,15 +23,16 @@ Update 23/5: Although training appears to provide fluent poses, I haven't been a
 
 Check out [this repository](https://github.com/pieterwolfert/2d_to_3d_human_pose_converter) for translating 2D frontal pose to 3D frontal pose.
 
-### Running the code
+## Running the code
+----
 
-## Get Data
+### Get Data
 Before running the code, you need to have the youtube tedx video data already available.
 
 Use the "Download videos and transcripts" section instructions in [youtube-gesture-dataset](https://github.com/isibord/youtube-gesture-dataset) to get the data before proceeding. 
 Note that this fork has some changes from the original repository needed for the remaining steps.
 
-## Run the Code
+### Run the Code
 Please follow the following steps to run the code:
 
 1- Create the following directories:
