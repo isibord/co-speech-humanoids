@@ -41,7 +41,7 @@ Please follow the following steps to run the code:
 	./data/shots/CSV/
 	./models/
 
-2- Place the youtube-gestures-dataset generated .csv, .json, and .vtt (including *.en.vtt files as well) in their respective folders. Please take care to make sure that file names are formated exactly as <video_id>.ext to avoid file errors.
+2- Place the youtube-gestures-dataset generated .csv, .json, and .vtt (including *.en.vtt files in ./data/videos_tedx_subtitles/) in their respective folders. Please take care to make sure that file names are formated exactly as <video_id>.ext to avoid file errors.
 
 3- Download glove.6B.300d.txt from https://nlp.stanford.edu/projects/glove/ and move to ./data directory
 
