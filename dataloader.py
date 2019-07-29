@@ -57,7 +57,7 @@ class DataLoader:
     def processSentences(self):
         word_vectors = []
         idx = 0
-        with open(self.embedding_file, 'r') as f:
+        with open(self.embedding_file, 'r', encoding="utf8") as f:
             for line in tqdm(f):
                 values = line.split()
                 word = values[0]
@@ -130,7 +130,7 @@ class Dataset(data.Dataset):
 
 
 def main():
-    dl = DataLoader("preprocessed.pickle", "glove.6B.300d.txt", 100, 10)
+    dl = DataLoader("./data/preprocessed_1295videos.pickle", "./data/glove.6B.300d.txt", 100, 10)
     print("Loading data...")
     x_train, y_train = dl.getTrainingData()
     print("Making weight matrix...")

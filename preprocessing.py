@@ -61,9 +61,12 @@ class DataProcessor():
         subtitle_files = [x for x in os.listdir(self.sub_dir) if 'vtt' in x]
         for x in tqdm(subtitle_files):
             captions = []
-            for caption in webvtt.read(self.sub_dir + x):
-                captions.append([caption.start, caption.text, caption.end])
-            clip_caption_sequences.append([x, captions])
+            try:
+                for caption in webvtt.read(self.sub_dir + x):
+                    captions.append([caption.start, caption.text, caption.end])
+                clip_caption_sequences.append([x, captions])
+            except Exception: # in case caption is missing or malformed, just skip it
+                pass
         self.clip_captions = clip_caption_sequences
 
     def readCSV(self):
@@ -115,6 +118,7 @@ class DataProcessor():
                 start_seconds = x[2][x[1].index(frame_number)]
                 length = x[3][x[1].index(frame_number)]
                 return start_seconds, length
+        return None, None
 
     def getCaptions(self, filename):
         for x in self.clip_captions:
@@ -135,13 +139,14 @@ class DataProcessor():
                 length_shoulders = pose_list[4] - pose_list[10]
                 offset_x = pose_list[2]
                 offset_y = pose_list[3]
-                for i, item in enumerate(pose_list):
-                    if i % 2 == 0:
-                        pose_list[i] = (item - offset_x) / length_shoulders
-                    else:
-                        pose_list[i] = (item - offset_y) / length_shoulders
-                if len(pose_list) is 16:
-                    temp.append(pose_list)
+                if length_shoulders != 0:
+                    for i, item in enumerate(pose_list):
+                        if i % 2 == 0:
+                            pose_list[i] = (item - offset_x) / length_shoulders
+                        else:
+                            pose_list[i] = (item - offset_y) / length_shoulders
+                    if len(pose_list) is 16:
+                        temp.append(pose_list)
         return temp
 
     def runPCA(self, pca_frames):
@@ -160,6 +165,8 @@ class DataProcessor():
             clip_info = x[1]
             frames = x[2]
             start_time, length = self.getTime(filename, clip_info[0])
+            if start_time is None:
+                continue
             fps = len(frames)/length
             captions = self.getCaptions(filename)
             captions_time = []
