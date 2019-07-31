@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 from model import EncoderRNN, AttnDecoderRNN
 from dataloader import DataLoader, Dataset
 from custom_classes import CustomLoss
+from animate import Animate
 
 __author__ = "Pieter Wolfert"
 
@@ -48,7 +49,7 @@ def speech2gesture(encoder, decoder, input_string):
             decoder_output, decoder_hidden, attn_weights =\
                 decoder(decoder_input, decoder_hidden, encoder_outputs)
             decoder_input = decoder_output
-            print((chunks*20)+n)
+            # print((chunks*20)+n)
             decoder_outputs_generated[(chunks*20)+n] = decoder_output
     return decoder_outputs_generated.squeeze(1).detach().numpy()
 
@@ -103,11 +104,16 @@ def plotPose(pose_list, dl):
     pose_list - one frame output of the decoder
     dl - dataloader object that contains our training data
     """
+    # pose_list = dl.pca.inverse_transform(pose_list)
+    # plt.plot(pose_list[0:10:2], pose_list[1:10:2])
+    # plt.plot([pose_list[2], pose_list[10]], [pose_list[3], pose_list[11]])
+    # plt.plot(pose_list[10::2], pose_list[11::2])
+    # plt.show()
+
     pose_list = dl.pca.inverse_transform(pose_list)
-    plt.plot(pose_list[0:10:2], pose_list[1:10:2])
-    plt.plot([pose_list[2], pose_list[10]], [pose_list[3], pose_list[11]])
-    plt.plot(pose_list[10::2], pose_list[11::2])
-    plt.show()
+    animation_object = Animate((-2, 2), (-2, 2))
+    anim = animation_object.animate(pose_list, 500)
+    anim.save('animation.html', writer='imagemick', fps=60)
 
 def main():
     #make sure these parameters are the same as in the saved model
@@ -115,7 +121,7 @@ def main():
     dataset_size = 10000
     hidden_size = 200
     bidirectional = True
-    model_file = "./models/seq2seq_90_0.04036942393450761.tar"
+    model_file = "./models/seq2seq_30_22634.829470097924.tar"
     dl = DataLoader("./data/preprocessed_1295videos.pickle",\
         "./data/glove.6B.300d.txt",\
         dataset_size, 10)
@@ -130,7 +136,7 @@ def main():
     to_pose = speech2gesture(encoder, decoder, input_string)
 
     #let's look at an individual frame:
-    plotPose(to_pose[0], dl)
+    plotPose(to_pose, dl)
 
 if __name__ == '__main__':
     main()

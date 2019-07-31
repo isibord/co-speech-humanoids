@@ -42,11 +42,11 @@ class Animate:
 
 def main():
     dl = DataLoader("./data/preprocessed_1295videos.pickle", "./data/glove.6B.300d.txt", 10000, 10)
-    mean_pose = [[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]]
+    mean_pose = [[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0]]
     mean_pose = dl.pca.inverse_transform(mean_pose)
     animation_object = Animate((-1, 1), (-1, 1))
     anim = animation_object.animate(mean_pose, 500)
-    anim.save('animation.gif', writer='imagemick', fps=60)
+    anim.save('animation.html', writer='imagemick', fps=60)
 
 if __name__ == '__main__':
     main()

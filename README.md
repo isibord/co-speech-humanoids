@@ -24,8 +24,6 @@ Update 23/5: Although training appears to provide fluent poses, I haven't been a
 Check out [this repository](https://github.com/pieterwolfert/2d_to_3d_human_pose_converter) for translating 2D frontal pose to 3D frontal pose.
 
 ## Running the code
-----
-
 ### Get Data
 Before running the code, you need to have the youtube tedx video data already available.
 
@@ -52,4 +50,6 @@ Please follow the following steps to run the code:
 
 6- If running for the first time, modify main.py so that the parameter pre_trained_file=None
 
-7- Run main.py
+7- Run main.py to train the model. Note that if your training gets interrupted, you can resume from the last saved state by updating this parameter: pre_trained_file=./models/seq2seq_{highest-epoch-completed}_{...}.tar
+
+8- Run inference.py to run the model and to translate a string to a sequence of poses. Be sure to update the model_file path to your saved trained model. Observe the generated pose animation in the file 'animation.html' and also under the animation_frames folder. Works best in Chrome browser.
