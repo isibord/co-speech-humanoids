@@ -185,7 +185,7 @@ class DataProcessor():
                     pose_frames = self.normalizePose(ff)
                     text = c[1]
                     clip_caption_poses.append([text, pose_frames])
-        with open('preprocessed_1295videos.pickle', 'wb') as fp:
+        with open('./data/preprocessed_1295videos.pickle', 'wb') as fp:
             pickle.dump(clip_caption_poses, fp)
 
 if __name__=="__main__":

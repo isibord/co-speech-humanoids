@@ -53,3 +53,6 @@ Please follow the following steps to run the code:
 7- Run main.py to train the model. Note that if your training gets interrupted, you can resume from the last saved state by updating this parameter: pre_trained_file=./models/seq2seq_{highest-epoch-completed}_{...}.tar
 
 8- Run inference.py to run the model and to translate a string to a sequence of poses. Be sure to update the model_file path to your saved trained model. Observe the generated pose animation in the file 'animation.html' and also under the animation_frames folder. Works best in Chrome browser.
+
+### Known Issues
+1- Index out of range runtime error with long sentences while converting the speech to gesture
